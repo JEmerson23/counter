@@ -4,19 +4,23 @@
     <meta http-equiv="content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <link rel="stylesheet" href="./style/style.css" type="text/css" media="all" />
+    
     <title>counter</title>
   </head>
   <body>
-   <div class="counter_box">
+   <section class="counter_box">
+    <div class="c_box__ui">
     <div class="c_box__display_box">
      <p id="counter_display" class="c_box__display">0</p>
     </div>
     <nav class="c_box_button_box">
      <button id="counter_button_add" class="c_box__button">+</button>
      <button id="counter_button_decrease" class="c_box__button">-</button>
-     <button id="counter_button_reset" class="c_box__button">reset</button>
+     <button id="counter_button_reset" class="c_box__button-red">r</button>
     </nav>
-   </div>
-   <script src="./script/main.js" type="application/javascript" charset="utf-8"></script>
+    </div>
+   </section>
+   <script src="./script/main.js" type="module" charset="utf-8"></script>
   </body>
 </html>
