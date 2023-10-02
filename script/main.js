@@ -1,6 +1,10 @@
 import Counter from "./modules/Counter.js";
 
-const counter = new Counter("counter_display");
+const counter = new Counter("current_value_display");
+
+counter.maxValueDisplay = "max_value_display";
+
+counter.maxValue = 10;
 
 counter.buttons = {
  add: {

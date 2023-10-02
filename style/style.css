@@ -6,16 +6,6 @@
  --counter-button-bg-color-red: #c70c0c;
 }
 
-@keyframes displayAnime {
- from {
-  background-color: blue;
- }
- 
- to {
-  background-color: red;
- }
-}
-
 html {
  height: 100%;
 }
@@ -65,15 +55,32 @@ body {
 }
 
 .c_box__display {
- color: #3b3b3b;
+ display: flex;
+ flex-direction: row;
+ flex-wrap: wrap;
+ text-align: center;
+ height: 2.2em;
+ width: fit-content;
+}
+
+.c_display__current_value, .c_display__max_value-on {
  font-size: 2em;
  font-weight: 500;
 }
 
-.display-animation {
- animation: displayAnime 0.25s ease;
+.c_display__current_value {
+ color: #3b3b3b; 
 }
 
+.c_display__max_value-off {
+ display: none;
+}
+
+.c_display__max_value-on {
+ color: #828282;
+ display: block;
+}
+ 
 .c_box__button_box {
  display: flex;
  align-items: center;
