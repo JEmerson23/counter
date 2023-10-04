@@ -40,16 +40,17 @@ export default class Counter {
     })();
 
     this.MAX_VALUE = (() => {
-     if (counter.$maxValueDisplay) {
-      const getValue_re = /^\/(\d+)/;
+      if (counter.$maxValueDisplay) {
+        const getValue_re = /^\/(\d+)/;
 
-      if (getValue_re.test(
-       counter.$maxValueDisplay.textContent)) {
-        return Number(
-         getValue_re.exec(counter.$maxValueDisplay.textContent)[1]
-        );
-       }
+        if (getValue_re.test(counter.$maxValueDisplay.textContent)) {
+          return Number(
+            getValue_re.exec(counter.$maxValueDisplay.textContent)[1]
+          );
+        }
       }
+
+      return null;
     })();
 
     this._onupgrade = function (displays, counter) {
@@ -58,6 +59,10 @@ export default class Counter {
       $currentValueDisplay.textContent = counter.value;
 
       if ($maxValueDisplay) {
+        if (counter.maxValue == null) {
+          counter._maxValeuDisplayConfig.state = false;
+        }
+
         $maxValueDisplay.textContent = `/${counter.maxValue}`;
       }
     };
@@ -71,7 +76,7 @@ export default class Counter {
 
   set value(n) {
     isNumber(n, true);
-    
+
     let number = n;
 
     this.VALUE = number;
@@ -96,7 +101,11 @@ export default class Counter {
       );
     }
 
-    this.MAX_VALUE = n;
+    if (n == 0) {
+      this.MAX_VALUE = null;
+    } else {
+      this.MAX_VALUE = n;
+    }
 
     this._upgradeDisplay();
   }
@@ -126,20 +135,20 @@ export default class Counter {
 
     for (let [key, value] of Object.entries(obj)) {
       if (this._$button.hasOwnProperty(key)) {
-       foundElementById(value.id);
-        
-       this._$button[key] = document.getElementById(value.id);
+        foundElementById(value.id);
 
-       this._$button[key].addEventListener(
-        "click",
-        (function (counter, value) {
-         return function (event) {
-           const callback = value.onclick;
+        this._$button[key] = document.getElementById(value.id);
 
-           callback(counter, event);
-         };
-        })(this, value)
-       );
+        this._$button[key].addEventListener(
+          "click",
+          (function (counter, value) {
+            return function (event) {
+              const callback = value.onclick;
+
+              callback(counter, event);
+            };
+          })(this, value)
+        );
       }
     }
   }
@@ -159,43 +168,42 @@ export default class Counter {
   }
 
   add(n) {
-   isNumber(n, true);
-    
-   if(this.value < this.maxValue) {
+    isNumber(n, true);
+
     let number = n;
-    
-    if (number < 0) {
-     number = Math.abs(number);
+
+    number = Math.abs(number);
+
+    if (this.value == this.maxValue) {
+      return;
     }
 
     this.value += number;
-   }
   }
 
   decrease(n) {
     isNumber(n, true);
 
     if (this.value > 0) {
-     let number = n;
-     
-     if (number < 0) {
-      number = Math.abs(number);
-     }
+      let number = n;
 
-     this.value -= number;
+      number = Math.abs(number);
+
+      this.value -= number;
     }
   }
 
   reset(toValue) {
-   if (!toValue) {
-    toValue = 0;
-   }
-   
-   isNumber(toValue, true);
-   
-   if(this.value != toValue) {
-    this.value = toValue;
-   }
+    if (!toValue) {
+      toValue = 0;
+    }
+
+    isNumber(toValue, true);
+
+    if (this.value != toValue || this.maxValue != null) {
+      this.value = toValue;
+      this.maxValue = 0;
+    }
   }
 
   _upgradeDisplay() {
