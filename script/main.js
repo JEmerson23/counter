@@ -36,7 +36,7 @@ $addMaxValueButton.onclick = () => {
     ))) {
     setMaxValue();
    }
- }},222)
+ }},222);
  
  function setMaxValue() {
   let value = window.prompt(maxValueAdditionPromptMessage);
